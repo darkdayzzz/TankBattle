@@ -23,4 +23,3 @@ ATank* ATankPlayerController::GetControllerTank() const
 {
 	return Cast<ATank>(GetPawn());
 }
-
