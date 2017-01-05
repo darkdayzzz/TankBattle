@@ -37,13 +37,13 @@ void ATankPlayerController::AimTowardsCrosshair()
 	FVector HitLocation; // out parameter
 	if (GetSightRayHitLocation(HitLocation))
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Hitting: %s"), *(HitLocation.ToString()));
 		/// TODO Tell controller tank to aim at this point
 	}
 }
 
-bool ATankPlayerController::GetSightRayHitLocation(FVector& Hitlocation) const
+bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 {
-	bool bHittingSomething = false;
 	int32 ViewportSizeX;
 	int32 ViewportSizeY;
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
@@ -52,18 +52,12 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& Hitlocation) const
 	FVector LookDirection;
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Look Direction: %s"), *(LookDirection.ToString()));
-		/// get vector from camera to aiming reticle 
-		/// ray-cast along vector to find where ray-trace intersects first object hit by ray-trace (up to max range)
-		/// if we hit something
-			/// assign world-coordinates at intersection of hit to HitLocation
-			/// return function is true	
+		return GetLookVectorHitLocation(LookDirection, HitLocation);
 	};
-
-	return bHittingSomething;
+	return false;
 }
 
-bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const
+bool ATankPlayerController::GetLookDirection(const FVector2D ScreenLocation, FVector& LookDirection) const
 {
 	FVector CameraLocation;
 	return DeprojectScreenPositionToWorld(
@@ -72,4 +66,24 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 		CameraLocation,
 		LookDirection
 	);
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(const FVector& LookDirection, FVector& HitLocation) const
+{
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+	auto EndLocation = StartLocation + LookDirection * LineTraceRange;
+	if (GetWorld()->LineTraceSingleByChannel(
+		HitResult, 
+		StartLocation,
+		EndLocation,
+		ECollisionChannel::ECC_Camera
+	))
+	{
+		HitLocation = HitResult.Location;
+		UE_LOG(LogTemp, Warning, TEXT("Hitting: %s"), *(HitResult.GetActor()->GetName()));
+		return true;
+	};
+	HitLocation = FVector(0);
+	return false;
 }

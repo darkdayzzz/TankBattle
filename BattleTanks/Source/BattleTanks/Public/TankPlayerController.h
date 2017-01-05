@@ -22,6 +22,9 @@ private:
 	UPROPERTY(EditAnywhere)
 		float CrosshairLocationY = 0.33333f;
 
+	UPROPERTY(EditAnywhere)
+		float LineTraceRange = 1000000.0f; // 10 kms
+
 	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
@@ -33,5 +36,6 @@ private:
 	void AimTowardsCrosshair(); 
 
 	bool GetSightRayHitLocation(FVector& Hitlocation) const;
-	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookDirection(const FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookVectorHitLocation(const FVector& LookDirection, FVector& HitLocation) const;
 };
