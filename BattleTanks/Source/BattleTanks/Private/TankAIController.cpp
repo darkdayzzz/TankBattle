@@ -44,3 +44,23 @@ ATank* ATankAIController::GetPlayerTank() const
 		return nullptr;
 	}
 }
+
+
+void ATankAIController::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	auto PlayerTank = GetPlayerTank();
+	if (PlayerTank)
+	{
+		AimTowardsPlayer(*PlayerTank);
+	}
+}
+
+void ATankAIController::AimTowardsPlayer(const ATank& PlayerTank)
+{
+	auto ControlledTank = GetControllerTank();
+	if (!ControlledTank) { return; }
+	FVector HitLocation; // out parameter
+	ControlledTank->AimAt(PlayerTank.GetActorLocation());
+}
