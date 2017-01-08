@@ -12,6 +12,7 @@ class BATTLETANKS_API ATank : public APawn
 	GENERATED_BODY()
 
 public:
+
 	void AimAt(FVector HitLocation);
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
@@ -21,6 +22,10 @@ protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:
+	// Projectile launch speed in cm per second so 100000=1km/s
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float LaunchSpeed = 100000.0f; // TODO - Find sensible default
+
 	// Sets default values for this pawn's properties
 	ATank();
 
