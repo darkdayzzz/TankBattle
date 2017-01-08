@@ -13,8 +13,11 @@ class BATTLETANKS_API UTankAimingComponent : public UActorComponent
 
 public:
 	void AimAt(const FVector HitLocation);
+	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 
-private:	
+private:
+	UStaticMeshComponent* Barrel = nullptr;
+
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
