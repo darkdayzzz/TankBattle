@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTanks.h"
+#include "TankBarrel.h"
 #include "TankAimingComponent.h"
 
 
@@ -15,7 +16,7 @@ UTankAimingComponent::UTankAimingComponent()
 	// ...
 }
 
-void UTankAimingComponent::SetBarrelReference(UStaticMeshComponent* BarrelToSet)
+void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
 	Barrel = BarrelToSet;
 }
@@ -46,6 +47,8 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	// Get current barrel pitch and turret yaw
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
+	auto deltaRotator = AimAsRotator - BarrelRotator;
+	Barrel->Elevate(5); // TODO remove magic number for degrees per second
 	// Get difference between current pitch and yaw and AimDirection pitch and yaw
 	// get minimum and maximum pitch of barrel on turret from turret property
 	// determine quickest yaw direction - clockwise or anti-clockwise, remembering 0 deg to 359 deg is quicker anti-clockwise than clockwise
