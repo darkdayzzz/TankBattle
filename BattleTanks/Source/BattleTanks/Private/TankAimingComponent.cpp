@@ -54,16 +54,8 @@ void UTankAimingComponent::AimAt(const FVector HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
-	// Get current tank roll, pitch and yaw as turret rotation and barrel pitch will be relative to these
-	// Get current barrel pitch and turret yaw
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
 	auto deltaRotator = AimAsRotator - BarrelRotator;
-	Barrel->Elevate(5); // TODO remove magic number for degrees per second
-	// Get difference between current pitch and yaw and AimDirection pitch and yaw
-	// get minimum and maximum pitch of barrel on turret from turret property
-	// determine quickest yaw direction - clockwise or anti-clockwise, remembering 0 deg to 359 deg is quicker anti-clockwise than clockwise
-	// determine if required pitch is outside of min/max then there is no Aiming Solution without repositioning the tank or re-trying using High Trajectory		
-	// if still Aiming Solution then
-		// Move barrel given an example
+	Barrel->Elevate(deltaRotator.Pitch); 
 }
