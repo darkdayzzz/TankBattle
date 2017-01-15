@@ -2,14 +2,12 @@
 
 #pragma once
 
-#include "Tank.h"
 #include "AIController.h"
-#include "TankPlayerController.h"
 #include "TankAIController.generated.h"
 
-/**
- * 
- */
+// forward declarations
+class ATank;
+
 UCLASS()
 class BATTLETANKS_API ATankAIController : public AAIController
 {
