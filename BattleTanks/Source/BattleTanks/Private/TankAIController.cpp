@@ -8,7 +8,6 @@
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("AI Controller Begin Play"));
 	auto ControlledTank = GetControllerTank();
 	if (!ControlledTank)
 	{
