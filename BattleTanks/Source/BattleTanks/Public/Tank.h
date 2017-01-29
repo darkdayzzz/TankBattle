@@ -40,6 +40,9 @@ private:
 	UPROPERTY(EditAnywhere, Category = Setup)
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
+	float ReloadTimeInSecs = 3.0f;
+	double LastFireTime = 0;
+
 	UTankBarrel* Barrel = nullptr;
 
 	// Sets default values for this pawn's properties
