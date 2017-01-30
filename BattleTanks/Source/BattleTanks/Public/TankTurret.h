@@ -19,7 +19,7 @@ public:
 
 private:
 	// maximum speed in degrees per second to rotate
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float MaxDegreesPerSecond = 20.0f;
 		
 	

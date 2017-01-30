@@ -17,9 +17,9 @@ class BATTLETANKS_API ATankPlayerController : public APlayerController
 private:
 	ATank* ControlledTank = nullptr;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float CrosshairLocationX = 0.5f;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditDefaultsOnly)
 		float CrosshairLocationY = 0.33333f;
 
 	UPROPERTY(EditAnywhere)
